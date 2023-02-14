@@ -1,4 +1,5 @@
-import Card from './components/Card'
+import React from 'react';
+import Card from './components/Card';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 
@@ -24,11 +25,13 @@ function App() {
         </div>
 
         <div className="d-flex">
-          {arr.map(el => (
+          {arr.map(obj => (
             <Card
-              title={el.title}
-              price={el.price}
-              image={el.image}
+              title={obj.title}
+              price={obj.price}
+              image={obj.image}
+              onFavorite={() => console.log('Добавили в закладки')}
+              onPlus={() => console.log('Нажали плюс')}
             />
           ))}
         </div>
