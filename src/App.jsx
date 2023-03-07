@@ -27,7 +27,7 @@ function App() {
           onClickClose={() => setCartOpened(false)}
           items={items}
           rerenderCartItems={rerenderCartItems}
-          removeItem={(card) => setAddedItems([...addedItems.filter(el => el == card)])}
+          removeItem={(card) => setAddedItems([...addedItems.filter(el => el !== card)])}
         />}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
