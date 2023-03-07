@@ -4,7 +4,9 @@ import Header from './components/Header';
 import Drawer from './components/Drawer';
 
 function App() {
-  const [items, setItems] = React.useState([])
+  const [items, setItems] = React.useState([]);
+  const [addedItems, setAddedItems] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
 
   useEffect(() => {
@@ -13,9 +15,20 @@ function App() {
       .then(res => setItems(res));
   }, [])
 
+  const rerenderCartItems = () => {
+    setCartItems([...addedItems]);
+  }
+
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer onClickClose={() => setCartOpened(false)}/>}
+      {cartOpened
+        && <Drawer
+          cartItems={addedItems}
+          onClickClose={() => setCartOpened(false)}
+          items={items}
+          rerenderCartItems={rerenderCartItems}
+          removeItem={(card) => setAddedItems([...addedItems.filter(el => el == card)])}
+        />}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
@@ -27,15 +40,37 @@ function App() {
         </div>
 
         <div className="d-flex flex-wrap" >
-          {items.map(obj => (
-            <Card
-              title={obj.title}
-              price={obj.price}
-              image={obj.image}
-              onFavorite={() => console.log('Добавили в закладки')}
-              onPlus={() => console.log('Нажали плюс')}
-            />
-          ))}
+          {items.map((obj, i) => {
+            obj.key = i;
+            // obj.isAdded = false;
+
+            return (
+              <Card
+                key={i}
+                title={obj.title}
+                price={obj.price}
+                image={obj.image}
+                cartItems={cartItems}
+                // updateItems={() => {
+                //   if (!items[i].isAdded) {
+                //     return items[i].isAdded = true;
+                //   } else {
+                //     return items[i].isAdded = false;
+                //   }
+                // }}
+
+                updateItems={() => setAddedItems([...addedItems, obj])}
+
+                removeItem={() => setAddedItems([...addedItems.filter(el => el !== obj)])}
+
+                setCartItems={() => setCartItems(addedItems)}
+                rerenderCartItems={rerenderCartItems}
+                item={obj}
+                items={items}
+                addedItems={addedItems}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

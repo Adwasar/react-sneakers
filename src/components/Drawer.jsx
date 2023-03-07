@@ -1,4 +1,5 @@
-function Drawer(props) {
+function Drawer(props = []) {
+
   return (
     <div className="overlay">
       <div className="drawer">
@@ -8,24 +9,27 @@ function Drawer(props) {
         </h2>
 
         <div className="items">
-          <div className="cartItem d-flex align-center mb-20">
-            <div className="cartItemImg"
-              style={{ backgroundImage: 'url(/img/sneakers/1.png)' }}></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 руб.</b>
-            </div>
-            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-          </div>
-          <div className="cartItem d-flex align-center mb-20">
-            <div className="cartItemImg"
-              style={{ backgroundImage: 'url(/img/sneakers/2.png)' }}></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 руб.</b>
-            </div>
-            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-          </div>
+          {props.cartItems.map((el, i) => {
+            return (
+              <div className="cartItem d-flex align-center mb-20">
+                <div className="cartItemImg"
+                  style={{ backgroundImage: `url(${el.image})` }}></div>
+                <div className="mr-20 flex">
+                  <p className="mb-5">{el.title}</p>
+                  <b>{el.price} руб.</b>
+                </div>
+                <img
+                  onClick={() => {
+                    // console.log(el)
+                    props.removeItem(el);
+                  }}
+                className="removeBtn"
+                src="/img/btn-remove.svg"
+                alt="Remove"
+                />
+              </div>
+            )
+          })}
         </div>
 
         <div className="cartTotalBlock">
