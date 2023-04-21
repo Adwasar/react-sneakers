@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import Card from './components/Card';
-import Header from './components/Header';
-import Drawer from './components/Drawer';
+import React, { useEffect } from "react";
+import Card from "./components/Card";
+import Header from "./components/Header";
+import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -10,25 +10,28 @@ function App() {
   const [cartOpened, setCartOpened] = React.useState(false);
 
   useEffect(() => {
-    fetch('https://64020cd7ab6b7399d0b2a6df.mockapi.io/items')
-      .then(res => res.json())
-      .then(res => setItems(res));
-  }, [])
+    fetch("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
+      .then((res) => res.json())
+      .then((res) => setItems(res));
+  }, []);
 
   const rerenderCartItems = () => {
     setCartItems([...addedItems]);
-  }
+  };
 
   return (
     <div className="wrapper clear">
-      {cartOpened
-        && <Drawer
+      {cartOpened && (
+        <Drawer
           cartItems={addedItems}
-          onClickClose={() => setCartOpened(false)}
           items={items}
+          onClickClose={() => setCartOpened(false)}
           rerenderCartItems={rerenderCartItems}
-          removeItem={(card) => setAddedItems([...addedItems.filter(el => el !== card)])}
-        />}
+          removeItem={(card) =>
+            setAddedItems([...addedItems.filter((el) => el !== card)])
+          }
+        />
+      )}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
@@ -39,10 +42,9 @@ function App() {
           </div>
         </div>
 
-        <div className="d-flex flex-wrap" >
+        <div className="d-flex flex-wrap">
           {items.map((obj, i) => {
             obj.key = i;
-            // obj.isAdded = false;
 
             return (
               <Card
@@ -51,25 +53,17 @@ function App() {
                 price={obj.price}
                 image={obj.image}
                 cartItems={cartItems}
-                // updateItems={() => {
-                //   if (!items[i].isAdded) {
-                //     return items[i].isAdded = true;
-                //   } else {
-                //     return items[i].isAdded = false;
-                //   }
-                // }}
-
-                updateItems={() => setAddedItems([...addedItems, obj])}
-
-                removeItem={() => setAddedItems([...addedItems.filter(el => el !== obj)])}
-
-                setCartItems={() => setCartItems(addedItems)}
-                rerenderCartItems={rerenderCartItems}
                 item={obj}
                 items={items}
                 addedItems={addedItems}
+                updateItems={() => setAddedItems([...addedItems, obj])}
+                removeItem={() =>
+                  setAddedItems([...addedItems.filter((el) => el !== obj)])
+                }
+                setCartItems={() => setCartItems(addedItems)}
+                rerenderCartItems={rerenderCartItems}
               />
-            )
+            );
           })}
         </div>
       </div>

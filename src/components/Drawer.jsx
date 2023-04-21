@@ -1,34 +1,39 @@
 function Drawer(props = []) {
-
   return (
     <div className="overlay">
       <div className="drawer">
         <h2 className="d-flex justify-between mb-30 ">
           Корзина
-          <img onClick={props.onClickClose} className="cu-p" src="/img/btn-remove.svg" alt="Close" />
+          <img
+            onClick={props.onClickClose}
+            className="cu-p"
+            src="/img/btn-remove.svg"
+            alt="Close"
+          />
         </h2>
 
         <div className="items">
           {props.cartItems.map((el, i) => {
             return (
               <div className="cartItem d-flex align-center mb-20">
-                <div className="cartItemImg"
-                  style={{ backgroundImage: `url(${el.image})` }}></div>
+                <div
+                  className="cartItemImg"
+                  style={{ backgroundImage: `url(${el.image})` }}
+                ></div>
                 <div className="mr-20 flex">
                   <p className="mb-5">{el.title}</p>
                   <b>{el.price} руб.</b>
                 </div>
                 <img
                   onClick={() => {
-                    // console.log(el)
                     props.removeItem(el);
                   }}
-                className="removeBtn"
-                src="/img/btn-remove.svg"
-                alt="Remove"
+                  className="removeBtn"
+                  src="/img/btn-remove.svg"
+                  alt="Remove"
                 />
               </div>
-            )
+            );
           })}
         </div>
 
@@ -51,7 +56,7 @@ function Drawer(props = []) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Drawer;

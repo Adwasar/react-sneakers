@@ -2,25 +2,7 @@ import React from 'react';
 import styles from './Card.module.scss';
 
 function Card(props) {
-  // const [isAdded, setIsAdded] = React.useState(false);
-  // props.item.isAdded = isAdded;
-
-  // const onClickPlus = () => {
-  //   setIsAdded(!isAdded);
-  //   if (!props.cartItems.includes(props.item)) {
-  //     props.setCartItems();
-  //   }
-  //   if (isAdded) {
-  //     props.rerenderCartItems();
-  //     props.item.isAdded = false;
-  //   }
-  // }
-
   const onClickPlus = () => {
-
-    // if (!props.cartItems.includes(props.item)) {
-    //   props.setCartItems();
-    // }
     if (!props.addedItems.includes(props.item)) {
       props.updateItems()
     } else {
@@ -28,10 +10,6 @@ function Card(props) {
     }
 
     props.setCartItems();
-
-    // props.setCartItems()
-    // if (!props.cartItems.includes(props.item)) {
-    // }
   }
 
   return (
@@ -44,9 +22,6 @@ function Card(props) {
         height={112}
         src={props.image}
         alt="sneakers"
-        onClick={() => {
-          console.log(props.addedItems);
-        }}
       />
       <h5>{props.title}</h5>
       <div className="d-flex justify-between align-center">
