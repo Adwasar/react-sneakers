@@ -22,7 +22,7 @@ function Drawer(props = []) {
                 ></div>
                 <div className="mr-20 flex">
                   <p className="mb-5">{el.title}</p>
-                  <b>{el.price} руб.</b>
+                  <b>{el.price} $</b>
                 </div>
                 <img
                   onClick={() => {
@@ -42,12 +42,12 @@ function Drawer(props = []) {
             <li>
               <span>Итого:</span>
               <div></div>
-              <b>21 498 руб.</b>
+              <b>538 $</b>
             </li>
             <li>
               <span>Налог 5%:</span>
               <div></div>
-              <b>1074 руб.</b>
+              <b>24 $</b>
             </li>
           </ul>
           <button className="greenButton">
