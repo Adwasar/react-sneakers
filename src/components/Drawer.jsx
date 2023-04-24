@@ -1,4 +1,4 @@
-function Drawer(props = []) {
+function Drawer(props) {
   return (
     <div className="overlay">
       <div className="drawer">
@@ -15,7 +15,7 @@ function Drawer(props = []) {
         <div className="items">
           {props.cartItems.map((el, i) => {
             return (
-              <div className="cartItem d-flex align-center mb-20">
+              <div key={i} className="cartItem d-flex align-center mb-20">
                 <div
                   className="cartItemImg"
                   style={{ backgroundImage: `url(${el.image})` }}

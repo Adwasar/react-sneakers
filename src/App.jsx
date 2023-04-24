@@ -8,6 +8,7 @@ function App() {
   const [addedItems, setAddedItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState("");
 
   useEffect(() => {
     fetch("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
@@ -15,8 +16,8 @@ function App() {
       .then((res) => setItems(res));
   }, []);
 
-  const rerenderCartItems = () => {
-    setCartItems([...addedItems]);
+  const handleChangeSearch = (event) => {
+    setSearchValue(event.target.value);
   };
 
   return (
@@ -26,24 +27,30 @@ function App() {
           cartItems={addedItems}
           items={items}
           onClickClose={() => setCartOpened(false)}
-          rerenderCartItems={rerenderCartItems}
           removeItem={(card) =>
-            setAddedItems([...addedItems.filter((el) => el !== card)])
+            setAddedItems((prev) => [...prev.filter((el) => el !== card)])
           }
         />
       )}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
-          <h1>Все кроссовки</h1>
+          <h1>
+            {searchValue ? `Поиск по: "${searchValue}"` : "Все кроссовки"}
+          </h1>
           <div className="search-block d-flex align-center">
             <img height={16} width={16} src="img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." />
+            <input
+              onChange={handleChangeSearch}
+              value={searchValue}
+              placeholder="Поиск..."
+            />
+            {searchValue && <img onClick={() => setSearchValue('')} className="close-btn" src="/img/btn-remove.svg" alt="Close" />}
           </div>
         </div>
 
         <div className="d-flex flex-wrap">
-          {items.map((obj, i) => {
+          {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((obj, i) => {
             obj.key = i;
 
             return (
@@ -56,12 +63,11 @@ function App() {
                 item={obj}
                 items={items}
                 addedItems={addedItems}
-                updateItems={() => setAddedItems([...addedItems, obj])}
+                updateItems={() => setAddedItems((prev) => [...prev, obj])}
                 removeItem={() =>
                   setAddedItems([...addedItems.filter((el) => el !== obj)])
                 }
                 setCartItems={() => setCartItems(addedItems)}
-                rerenderCartItems={rerenderCartItems}
               />
             );
           })}
