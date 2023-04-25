@@ -2,17 +2,9 @@ import React from "react";
 import styles from "./Card.module.scss";
 
 function Card(props) {
-  const onClickPlus = () => {
-    if (!props.addedItems.includes(props.item)) {
-      props.updateItems();
-    } else {
-      props.removeItem();
-    }
-  };
-
   return (
     <div className={styles.card}>
-      <div onClick={props.onFavorite} className={styles.favorite}>
+      <div className={styles.favorite}>
         <img src="/img/heart-unliked.svg" alt="#" />
       </div>
       <img width={133} height={112} src={props.image} alt="sneakers" />
@@ -24,7 +16,7 @@ function Card(props) {
         </div>
         <img
           className={styles.plus}
-          onClick={onClickPlus}
+          onClick={props.onClickPlus}
           src={
             props.addedItems.includes(props.item)
               ? "/img/btn-checked.svg"

@@ -63,19 +63,23 @@ function App() {
             .map((obj, i) => {
               obj.key = i;
 
+              const onClickPlus = () => {
+                if (!addedItems.includes(obj)) {
+                  setAddedItems((prev) => [...prev, obj]);
+                } else {
+                  setAddedItems([...addedItems.filter((el) => el !== obj)]);
+                }
+              };
+
               return (
                 <Card
                   key={i}
+                  item={obj}
                   title={obj.title}
                   price={obj.price}
                   image={obj.image}
-                  item={obj}
-                  items={items}
                   addedItems={addedItems}
-                  updateItems={() => setAddedItems((prev) => [...prev, obj])}
-                  removeItem={() =>
-                    setAddedItems([...addedItems.filter((el) => el !== obj)])
-                  }
+                  onClickPlus={onClickPlus}
                 />
               );
             })}
