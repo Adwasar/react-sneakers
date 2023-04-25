@@ -13,7 +13,7 @@ function Drawer(props) {
         </h2>
 
         <div className="items">
-          {props.cartItems.map((el, i) => {
+          {props.addedItems.map((el, i) => {
             return (
               <div key={i} className="cartItem d-flex align-center mb-20">
                 <div

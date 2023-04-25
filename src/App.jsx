@@ -6,7 +6,6 @@ import Drawer from "./components/Drawer";
 function App() {
   const [items, setItems] = React.useState([]);
   const [addedItems, setAddedItems] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
 
@@ -24,7 +23,7 @@ function App() {
     <div className="wrapper clear">
       {cartOpened && (
         <Drawer
-          cartItems={addedItems}
+          addedItems={addedItems}
           items={items}
           onClickClose={() => setCartOpened(false)}
           removeItem={(card) =>
@@ -45,32 +44,41 @@ function App() {
               value={searchValue}
               placeholder="Поиск..."
             />
-            {searchValue && <img onClick={() => setSearchValue('')} className="close-btn" src="/img/btn-remove.svg" alt="Close" />}
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue("")}
+                className="close-btn"
+                src="/img/btn-remove.svg"
+                alt="Close"
+              />
+            )}
           </div>
         </div>
 
         <div className="d-flex flex-wrap">
-          {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((obj, i) => {
-            obj.key = i;
+          {items
+            .filter((item) =>
+              item.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((obj, i) => {
+              obj.key = i;
 
-            return (
-              <Card
-                key={i}
-                title={obj.title}
-                price={obj.price}
-                image={obj.image}
-                cartItems={cartItems}
-                item={obj}
-                items={items}
-                addedItems={addedItems}
-                updateItems={() => setAddedItems((prev) => [...prev, obj])}
-                removeItem={() =>
-                  setAddedItems([...addedItems.filter((el) => el !== obj)])
-                }
-                setCartItems={() => setCartItems(addedItems)}
-              />
-            );
-          })}
+              return (
+                <Card
+                  key={i}
+                  title={obj.title}
+                  price={obj.price}
+                  image={obj.image}
+                  item={obj}
+                  items={items}
+                  addedItems={addedItems}
+                  updateItems={() => setAddedItems((prev) => [...prev, obj])}
+                  removeItem={() =>
+                    setAddedItems([...addedItems.filter((el) => el !== obj)])
+                  }
+                />
+              );
+            })}
         </div>
       </div>
     </div>
