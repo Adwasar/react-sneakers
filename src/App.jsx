@@ -1,22 +1,36 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = React.useState([]);
-  const [addedItems, setAddedItems] = React.useState([]);
+  const [addedItems, setBackAddedItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
 
   useEffect(() => {
-    fetch("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
-      .then((res) => res.json())
-      .then((res) => setItems(res));
+    axios
+      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
+      .then((res) => setItems(res.data));
+
+    axios
+      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+      .then((res) => setBackAddedItems(res.data));
   }, []);
 
   const handleChangeSearch = (event) => {
     setSearchValue(event.target.value);
+  };
+
+  const deleteItem = async (id) => {
+    await axios.delete(
+      `https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`
+    );
+    axios
+      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+      .then((res) => setBackAddedItems(res.data));
   };
 
   return (
@@ -26,9 +40,7 @@ function App() {
           addedItems={addedItems}
           items={items}
           onClickClose={() => setCartOpened(false)}
-          removeItem={(card) =>
-            setAddedItems((prev) => [...prev.filter((el) => el !== card)])
-          }
+          removeItem={(card) => deleteItem(card.id)}
         />
       )}
       <Header onClickCart={() => setCartOpened(true)} />
@@ -63,12 +75,24 @@ function App() {
             .map((obj, i) => {
               obj.key = i;
 
-              const onClickPlus = () => {
-                if (!addedItems.includes(obj)) {
-                  setAddedItems((prev) => [...prev, obj]);
+              const onClickPlus = async () => {
+                const isItemOnServer = addedItems.filter(
+                  (el) => el.title === obj.title && el.image === obj.image
+                );
+
+                if (!isItemOnServer.length) {
+                  await axios.post(
+                    "https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart",
+                    obj
+                  );
                 } else {
-                  setAddedItems([...addedItems.filter((el) => el !== obj)]);
+                  const id = isItemOnServer[0].id;
+                  deleteItem(id);
                 }
+
+                await axios
+                  .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+                  .then((res) => setBackAddedItems(res.data));
               };
 
               return (

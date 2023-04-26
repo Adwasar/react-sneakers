@@ -18,7 +18,9 @@ function Card(props) {
           className={styles.plus}
           onClick={props.onClickPlus}
           src={
-            props.addedItems.includes(props.item)
+            props.addedItems.find(
+              (el) => el.image === props.item.image && el.title === props.item.title
+            )
               ? "/img/btn-checked.svg"
               : "/img/btn-plus.svg"
           }
