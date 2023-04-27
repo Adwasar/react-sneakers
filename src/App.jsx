@@ -9,7 +9,8 @@ import FavoritesPage from "./Pages/FavoritesPage";
 
 function App() {
   const [items, setItems] = React.useState([]);
-  const [addedItems, setBackAddedItems] = React.useState([]);
+  const [cartItems, setCardItems] = React.useState([]);
+  const [facoriteItems, setFavoriteItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ function App() {
 
     axios
       .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-      .then((res) => setBackAddedItems(res.data));
+      .then((res) => setCardItems(res.data));
   }, []);
 
   const deleteItem = async (id) => {
@@ -28,11 +29,17 @@ function App() {
     );
     axios
       .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-      .then((res) => setBackAddedItems(res.data));
+      .then((res) => setCardItems(res.data));
+  };
+
+  const getData = async () => {
+    await axios
+      .get("https://my-json-server.typicode.com/Adwasar/react-sneakers/favorites")
+      .then((res) => console.log(res.data));
   };
 
   return (
-    <div className="wrapper clear">
+    <div onClick={getData} className="wrapper clear">
       <Header onClickCart={() => setCartOpened(true)} />
       <main>
         <div className="content p-40">
@@ -44,8 +51,8 @@ function App() {
                   items={items}
                   setItems={setItems}
                   deleteItem={deleteItem}
-                  setBackAddedItems={setBackAddedItems}
-                  addedItems={addedItems}
+                  setCardItems={setCardItems}
+                  cartItems={cartItems}
                 />
               }
             />
@@ -54,7 +61,7 @@ function App() {
         </div>
         {cartOpened && (
           <Drawer
-            addedItems={addedItems}
+            cartItems={cartItems}
             items={items}
             onClickClose={() => setCartOpened(false)}
             removeItem={(card) => deleteItem(card.id)}

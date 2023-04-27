@@ -1,5 +1,5 @@
 function Drawer(props) {
-  console.log(props.addedItems.length);
+  console.log(props.cartItems.length);
 
   return (
     <div className="overlay">
@@ -14,7 +14,7 @@ function Drawer(props) {
           />
         </h2>
 
-        {props.addedItems.length === 0 ? (
+        {props.cartItems.length === 0 ? (
           <div className="d-flex align-center justify-center flex-column flex">
             <img src="/img/empty-cart.svg" alt="empty cart" />
             <h2>Корзина пуста</h2>
@@ -25,7 +25,7 @@ function Drawer(props) {
         ) : (
           <>
             <div className="items">
-              {props.addedItems.map((el, i) => {
+              {props.cartItems.map((el, i) => {
                 return (
                   <div key={i} className="cartItem d-flex align-center mb-20">
                     <div

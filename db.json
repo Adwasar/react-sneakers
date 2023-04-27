@@ -1,0 +1,12 @@
+{
+  "favorites": [
+    {
+      "name": "one",
+      "id": 1 
+    },
+    {
+      "name": "two",
+      "id": 12
+    }
+ ]
+}

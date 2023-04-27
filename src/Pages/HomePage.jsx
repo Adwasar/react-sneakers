@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Card from "../components/Card";
 
-function HomePage({ items, deleteItem, setBackAddedItems, addedItems }) {
+function HomePage({ items, deleteItem, setCardItems, cartItems }) {
   const [searchValue, setSearchValue] = React.useState("");
 
   const handleChangeSearch = (event) => {
@@ -40,7 +40,7 @@ function HomePage({ items, deleteItem, setBackAddedItems, addedItems }) {
             obj.key = i;
 
             const onClickPlus = async () => {
-              const isItemOnServer = addedItems.filter(
+              const isItemOnServer = cartItems.filter(
                 (el) => el.title === obj.title && el.image === obj.image
               );
 
@@ -56,7 +56,7 @@ function HomePage({ items, deleteItem, setBackAddedItems, addedItems }) {
 
               await axios
                 .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-                .then((res) => setBackAddedItems(res.data));
+                .then((res) => setCardItems(res.data));
             };
 
             return (
@@ -66,7 +66,7 @@ function HomePage({ items, deleteItem, setBackAddedItems, addedItems }) {
                 title={obj.title}
                 price={obj.price}
                 image={obj.image}
-                addedItems={addedItems}
+                cartItems={cartItems}
                 onClickPlus={onClickPlus}
               />
             );
