@@ -11,11 +11,14 @@ import FavoritesPage from "./Pages/FavoritesPage";
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCardItems] = React.useState([]);
+  const [favoriteItems, setFavoriteItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
 
   const dataContext = {
     cartItems: cartItems,
     setCardItems: setCardItems,
+    favoriteItems: favoriteItems,
+    setFavoriteItems: setFavoriteItems,
     items: items,
   };
 
@@ -27,7 +30,16 @@ function App() {
     axios
       .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
       .then((res) => setCardItems(res.data));
+
+    const storedFavorite = JSON.parse(localStorage.getItem("favoriteItems"));
+    if (storedFavorite) {
+      setFavoriteItems(storedFavorite);
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
+  }, [favoriteItems]);
 
   const deleteItem = async (id) => {
     await axios.delete(
