@@ -1,9 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Card from "../components/Card";
+import DataContext from "../context";
 
-function HomePage({ items, deleteItem, setCardItems, cartItems }) {
+function HomePage({ deleteItem }) {
   const [searchValue, setSearchValue] = React.useState("");
+
+  const dataContext = React.useContext(DataContext);
 
   const handleChangeSearch = (event) => {
     setSearchValue(event.target.value);
@@ -32,15 +35,13 @@ function HomePage({ items, deleteItem, setCardItems, cartItems }) {
       </div>
 
       <div className="d-flex flex-wrap">
-        {items
+        {dataContext.items
           .filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase())
           )
           .map((obj, i) => {
-            obj.key = i;
-
             const onClickPlus = async () => {
-              const isItemOnServer = cartItems.filter(
+              const isItemOnServer = dataContext.cartItems.filter(
                 (el) => el.title === obj.title && el.image === obj.image
               );
 
@@ -56,7 +57,7 @@ function HomePage({ items, deleteItem, setCardItems, cartItems }) {
 
               await axios
                 .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-                .then((res) => setCardItems(res.data));
+                .then((res) => dataContext.setCardItems(res.data));
             };
 
             return (
@@ -66,7 +67,6 @@ function HomePage({ items, deleteItem, setCardItems, cartItems }) {
                 title={obj.title}
                 price={obj.price}
                 image={obj.image}
-                cartItems={cartItems}
                 onClickPlus={onClickPlus}
               />
             );

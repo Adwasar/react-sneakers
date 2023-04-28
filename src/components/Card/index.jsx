@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./Card.module.scss";
+import DataContext from "../../context";
 
 function Card(props) {
+  const dataContext = React.useContext(DataContext);
+  
   return (
     <div className={styles.card}>
       <div className={styles.favorite}>
@@ -18,7 +21,7 @@ function Card(props) {
           className={styles.plus}
           onClick={props.onClickPlus}
           src={
-            props.cartItems.find(
+            dataContext.cartItems.find(
               (el) => el.image === props.item.image && el.title === props.item.title
             )
               ? "/img/btn-checked.svg"

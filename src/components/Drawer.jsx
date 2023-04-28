@@ -1,5 +1,8 @@
+import React from "react";
+import DataContext from "../context";
+
 function Drawer(props) {
-  console.log(props.cartItems.length);
+  const dataContext = React.useContext(DataContext);
 
   return (
     <div className="overlay">
@@ -14,7 +17,7 @@ function Drawer(props) {
           />
         </h2>
 
-        {props.cartItems.length === 0 ? (
+        {dataContext.cartItems.length === 0 ? (
           <div className="d-flex align-center justify-center flex-column flex">
             <img src="/img/empty-cart.svg" alt="empty cart" />
             <h2>Корзина пуста</h2>
@@ -25,7 +28,7 @@ function Drawer(props) {
         ) : (
           <>
             <div className="items">
-              {props.cartItems.map((el, i) => {
+              {dataContext.cartItems.map((el, i) => {
                 return (
                   <div key={i} className="cartItem d-flex align-center mb-20">
                     <div

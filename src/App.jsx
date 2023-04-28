@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
+import DataContext from "./context";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import HomePage from "./Pages/HomePage";
@@ -10,8 +11,13 @@ import FavoritesPage from "./Pages/FavoritesPage";
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCardItems] = React.useState([]);
-  const [facoriteItems, setFavoriteItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
+
+  const dataContext = {
+    cartItems: cartItems,
+    setCardItems: setCardItems,
+    items: items,
+  };
 
   useEffect(() => {
     axios
@@ -32,43 +38,31 @@ function App() {
       .then((res) => setCardItems(res.data));
   };
 
-  const getData = async () => {
-    await axios
-      .get("https://my-json-server.typicode.com/Adwasar/react-sneakers/favorites")
-      .then((res) => console.log(res.data));
-  };
-
   return (
-    <div onClick={getData} className="wrapper clear">
-      <Header onClickCart={() => setCartOpened(true)} />
-      <main>
-        <div className="content p-40">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  items={items}
-                  setItems={setItems}
-                  deleteItem={deleteItem}
-                  setCardItems={setCardItems}
-                  cartItems={cartItems}
-                />
-              }
+    <DataContext.Provider value={dataContext}>
+      <div className="wrapper clear">
+        <Header onClickCart={() => setCartOpened(true)} />
+        <main>
+          <div className="content p-40">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage setItems={setItems} deleteItem={deleteItem} />
+                }
+              />
+              <Route path="/favorites" element={<FavoritesPage />} />
+            </Routes>
+          </div>
+          {cartOpened && (
+            <Drawer
+              onClickClose={() => setCartOpened(false)}
+              removeItem={(card) => deleteItem(card.id)}
             />
-            <Route path="/favorites" element={<FavoritesPage />} />
-          </Routes>
-        </div>
-        {cartOpened && (
-          <Drawer
-            cartItems={cartItems}
-            items={items}
-            onClickClose={() => setCartOpened(false)}
-            removeItem={(card) => deleteItem(card.id)}
-          />
-        )}
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
+    </DataContext.Provider>
   );
 }
 
