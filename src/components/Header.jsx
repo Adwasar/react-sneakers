@@ -1,6 +1,10 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import DataContext from "../context";
 
 function Header(props) {
+  const dataContext = React.useContext(DataContext);
+  
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -25,7 +29,7 @@ function Header(props) {
             className="d-flex align-center mr-25 cu-p"
           >
             <img src="img/cart.svg" width={20} height={20} alt="Корзина" />
-            <span className="ml-5">1205 $</span>
+            <span className="ml-5">{dataContext.cartTotal} $</span>
           </li>
           <Link to="/favorites">
             <li className="d-flex align-center mr-25 cu-p">

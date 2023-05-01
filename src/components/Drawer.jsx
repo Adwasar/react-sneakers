@@ -55,14 +55,14 @@ function Drawer(props) {
             <div className="cartTotalBlock">
               <ul>
                 <li>
-                  <span>Итого:</span>
+                  <span>Количество:</span>
                   <div></div>
-                  <b>538 $</b>
+                  <b>{dataContext.cartItems.length} шт.</b>
                 </li>
                 <li>
-                  <span>Налог 5%:</span>
+                  <span>Итого:</span>
                   <div></div>
-                  <b>24 $</b>
+                  <b>{dataContext.cartTotal} $</b>
                 </li>
               </ul>
               <button className="greenButton">

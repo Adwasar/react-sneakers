@@ -13,13 +13,15 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
+  const [cartTotal, setCartTotal] = useState(0);
 
   const dataContext = {
+    items,
     cartItems,
     setCartItems,
     favoriteItems,
     setFavoriteItems,
-    items
+    cartTotal,
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function App() {
       .catch((error) => alert(error));
 
     axios
-      .get("https://f64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
       .then((res) => setCartItems(res.data))
       .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
@@ -42,6 +44,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
   }, [favoriteItems]);
+
+  useEffect(() => {
+    setCartTotal(cartItems.reduce((acc, item) => acc + item.price, 0));
+  }, [cartItems])
 
   const deleteItem = (id) => {
     axios
@@ -59,15 +65,10 @@ function App() {
     <DataContext.Provider value={dataContext}>
       <div className="wrapper clear">
         <Header onClickCart={() => setCartOpened(true)} />
-        <main>
+        <main onClick={() => console.log(cartTotal)}>
           <div className="content p-40">
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <HomePage setItems={setItems} deleteItem={deleteItem} />
-                }
-              />
+              <Route path="/" element={<HomePage deleteItem={deleteItem} />} />
               <Route path="/favorites" element={<FavoritesPage />} />
             </Routes>
           </div>
