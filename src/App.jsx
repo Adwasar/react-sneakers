@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
@@ -9,27 +9,29 @@ import HomePage from "./Pages/HomePage";
 import FavoritesPage from "./Pages/FavoritesPage";
 
 function App() {
-  const [items, setItems] = React.useState([]);
-  const [cartItems, setCardItems] = React.useState([]);
-  const [favoriteItems, setFavoriteItems] = React.useState([]);
-  const [cartOpened, setCartOpened] = React.useState(false);
+  const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [cartOpened, setCartOpened] = useState(false);
 
   const dataContext = {
-    cartItems: cartItems,
-    setCardItems: setCardItems,
-    favoriteItems: favoriteItems,
-    setFavoriteItems: setFavoriteItems,
-    items: items,
+    cartItems,
+    setCartItems,
+    favoriteItems,
+    setFavoriteItems,
+    items
   };
 
   useEffect(() => {
     axios
       .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
-      .then((res) => setItems(res.data));
+      .then((res) => setItems(res.data))
+      .catch((error) => alert(error));
 
     axios
-      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-      .then((res) => setCardItems(res.data));
+      .get("https://f64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+      .then((res) => setCartItems(res.data))
+      .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
     const storedFavorite = JSON.parse(localStorage.getItem("favoriteItems"));
     if (storedFavorite) {
@@ -41,13 +43,16 @@ function App() {
     localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
   }, [favoriteItems]);
 
-  const deleteItem = async (id) => {
-    await axios.delete(
-      `https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`
-    );
+  const deleteItem = (id) => {
     axios
-      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-      .then((res) => setCardItems(res.data));
+      .delete(`https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`)
+      .then(() => {
+        axios
+          .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+          .then((res) => setCartItems(res.data))
+          .catch((error) => alert(`что-то пошло не так : "${error}"`));
+      })
+      .catch((error) => alert(`что-то пошло не так : "${error}"`));
   };
 
   return (

@@ -57,7 +57,7 @@ function HomePage({ deleteItem }) {
 
               await axios
                 .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
-                .then((res) => dataContext.setCardItems(res.data));
+                .then((res) => dataContext.setCartItems(res.data));
             };
 
             return (
