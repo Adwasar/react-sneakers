@@ -29,7 +29,7 @@ function Header(props) {
             className="d-flex align-center mr-25 cu-p"
           >
             <img src="img/cart.svg" width={20} height={20} alt="Корзина" />
-            <span className="ml-5">{dataContext.cartTotal} $</span>
+            <span>{dataContext.cartTotal} $</span>
           </li>
           <Link to="/favorites">
             <li className="d-flex align-center mr-25 cu-p">

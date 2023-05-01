@@ -15,15 +15,6 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
 
-  const dataContext = {
-    items,
-    cartItems,
-    setCartItems,
-    favoriteItems,
-    setFavoriteItems,
-    cartTotal,
-  };
-
   useEffect(() => {
     axios
       .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
@@ -61,11 +52,21 @@ function App() {
       .catch((error) => alert(`что-то пошло не так : "${error}"`));
   };
 
+  const dataContext = {
+    items,
+    cartItems,
+    setCartItems,
+    favoriteItems,
+    setFavoriteItems,
+    cartTotal,
+    deleteItem,
+  };
+
   return (
     <DataContext.Provider value={dataContext}>
       <div className="wrapper clear">
         <Header onClickCart={() => setCartOpened(true)} />
-        <main onClick={() => console.log(cartTotal)}>
+        <main>
           <div className="content p-40">
             <Routes>
               <Route path="/" element={<HomePage deleteItem={deleteItem} />} />
