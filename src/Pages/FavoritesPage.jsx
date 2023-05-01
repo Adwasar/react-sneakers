@@ -40,7 +40,6 @@ function FavoritesPage() {
               price={obj.price}
               image={obj.image}
               onClickPlus={onClickPlus}
-              isFavorite={dataContext.isFavorite}
             />
           );
         })}
