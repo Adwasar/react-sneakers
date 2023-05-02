@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
 
-import DataContext from "./context";
-import Header from "./components/Header";
-import Drawer from "./components/Drawer";
-import HomePage from "./Pages/HomePage";
-import FavoritesPage from "./Pages/FavoritesPage";
+import DataContext from './context';
+import Header from './components/Header';
+import Drawer from './components/Drawer';
+import HomePage from './Pages/HomePage';
+import FavoritesPage from './Pages/FavoritesPage';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -18,17 +18,17 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/items")
+      .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/items')
       .then((res) => setItems(res.data))
       .catch((error) => alert(error));
 
     axios
-      .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+      .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
       .then((res) => setCartItems(res.data))
       .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
     const likedItemsStorage = JSON.parse(
-      localStorage.getItem("favoriteStorageItems")
+      localStorage.getItem('favoriteStorageItems'),
     );
     if (likedItemsStorage) {
       setFavoriteStorageItems(likedItemsStorage);
@@ -39,16 +39,16 @@ function App() {
 
   useEffect(() => {
     const handleUnload = () => {
-      localStorage.setItem("favoriteStorageItems", JSON.stringify(likedItems));
+      localStorage.setItem('favoriteStorageItems', JSON.stringify(likedItems));
     };
-    window.addEventListener("beforeunload", handleUnload);
-    return () => window.removeEventListener("beforeunload", handleUnload);
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
   }, [likedItems]);
 
   useEffect(() => {
     localStorage.setItem(
-      "favoriteStorageItems",
-      JSON.stringify(favoriteStorageItems)
+      'favoriteStorageItems',
+      JSON.stringify(favoriteStorageItems),
     );
   }, [favoriteStorageItems]);
 
@@ -61,7 +61,7 @@ function App() {
       .delete(`https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`)
       .then(() => {
         axios
-          .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+          .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
           .then((res) => setCartItems(res.data))
           .catch((error) => alert(`что-то пошло не так : "${error}"`));
       })

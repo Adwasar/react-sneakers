@@ -1,10 +1,10 @@
-import React from "react";
-import axios from "axios";
-import Card from "../components/Card";
-import DataContext from "../context";
+import React from 'react';
+import axios from 'axios';
+import Card from '../components/Card';
+import DataContext from '../context';
 
 function HomePage({ deleteItem }) {
-  const [searchValue, setSearchValue] = React.useState("");
+  const [searchValue, setSearchValue] = React.useState('');
 
   const dataContext = React.useContext(DataContext);
 
@@ -15,7 +15,7 @@ function HomePage({ deleteItem }) {
   return (
     <>
       <div className="d-flex align-center justify-between mb-40">
-        <h1>{searchValue ? `Поиск по: "${searchValue}"` : "Все кроссовки"}</h1>
+        <h1>{searchValue ? `Поиск по: "${searchValue}"` : 'Все кроссовки'}</h1>
         <div className="search-block d-flex align-center">
           <img height={16} width={16} src="img/search.svg" alt="Search" />
           <input
@@ -25,7 +25,7 @@ function HomePage({ deleteItem }) {
           />
           {searchValue && (
             <img
-              onClick={() => setSearchValue("")}
+              onClick={() => setSearchValue('')}
               className="close-btn"
               src="/img/btn-remove.svg"
               alt="Close"
@@ -37,18 +37,18 @@ function HomePage({ deleteItem }) {
       <div className="d-flex flex-wrap">
         {dataContext.items
           .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
+            item.title.toLowerCase().includes(searchValue.toLowerCase()),
           )
           .map((obj, i) => {
             const onClickPlus = async () => {
               const isItemOnServer = dataContext.cartItems.filter(
-                (el) => el.title === obj.title && el.image === obj.image
+                (el) => el.title === obj.title && el.image === obj.image,
               );
 
               if (!isItemOnServer.length) {
                 await axios.post(
-                  "https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart",
-                  obj
+                  'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart',
+                  obj,
                 );
               } else {
                 const id = isItemOnServer[0].id;
@@ -56,7 +56,7 @@ function HomePage({ deleteItem }) {
               }
 
               await axios
-                .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+                .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
                 .then((res) => dataContext.setCartItems(res.data));
             };
 

@@ -1,8 +1,8 @@
-import React from "react";
-import axios from "axios";
-import DataContext from "../context";
+import React from 'react';
+import axios from 'axios';
+import DataContext from '../context';
 
-import Card from "../components/Card";
+import Card from '../components/Card';
 
 function FavoritesPage() {
   const dataContext = React.useContext(DataContext);
@@ -16,13 +16,13 @@ function FavoritesPage() {
         {dataContext.favoriteStorageItems.map((obj, i) => {
           const onClickPlus = async () => {
             const isItemOnServer = dataContext.cartItems.filter(
-              (el) => el.title === obj.title && el.image === obj.image
+              (el) => el.title === obj.title && el.image === obj.image,
             );
 
             if (!isItemOnServer.length) {
               await axios.post(
-                "https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart",
-                obj
+                'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart',
+                obj,
               );
             } else {
               const id = isItemOnServer[0].id;
@@ -30,7 +30,7 @@ function FavoritesPage() {
             }
 
             await axios
-              .get("https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart")
+              .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
               .then((res) => dataContext.setCartItems(res.data));
           };
 

@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import DataContext from "../context";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import DataContext from '../context';
 
 function Header(props) {
   const dataContext = React.useContext(DataContext);
