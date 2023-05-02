@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import Card from '../components/Card';
 import DataContext from '../context';
 
-function HomePage({ deleteItem }) {
+function HomePage() {
   const [searchValue, setSearchValue] = React.useState('');
 
   const dataContext = React.useContext(DataContext);
@@ -40,26 +39,6 @@ function HomePage({ deleteItem }) {
             item.title.toLowerCase().includes(searchValue.toLowerCase()),
           )
           .map((obj, i) => {
-            const onClickPlus = async () => {
-              const isItemOnServer = dataContext.cartItems.filter(
-                (el) => el.title === obj.title && el.image === obj.image,
-              );
-
-              if (!isItemOnServer.length) {
-                await axios.post(
-                  'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart',
-                  obj,
-                );
-              } else {
-                const id = isItemOnServer[0].id;
-                deleteItem(id);
-              }
-
-              await axios
-                .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
-                .then((res) => dataContext.setCartItems(res.data));
-            };
-
             return (
               <Card
                 key={i}
@@ -67,7 +46,6 @@ function HomePage({ deleteItem }) {
                 title={obj.title}
                 price={obj.price}
                 image={obj.image}
-                onClickPlus={onClickPlus}
               />
             );
           })}

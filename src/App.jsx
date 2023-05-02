@@ -56,7 +56,7 @@ function App() {
     setCartTotal(cartItems.reduce((acc, item) => acc + item.price, 0));
   }, [cartItems]);
 
-  const deleteItem = (id) => {
+  const deleteCartItem = (id) => {
     axios
       .delete(`https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`)
       .then(() => {
@@ -68,6 +68,26 @@ function App() {
       .catch((error) => alert(`что-то пошло не так : "${error}"`));
   };
 
+  const addCartItem = async (currentCard) => {
+    const isItemOnCart = cartItems.filter(
+      (cartItem) => cartItem.title === currentCard.title && cartItem.image === currentCard.image,
+    );
+
+    if (!isItemOnCart.length) {
+      await axios.post(
+        'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart',
+        currentCard,
+      );
+    } else {
+      const id = isItemOnCart[0].id;
+      deleteCartItem(id);
+    }
+
+    await axios
+      .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
+      .then((res) => dataContext.setCartItems(res.data));
+  };
+
   const dataContext = {
     items,
     cartItems,
@@ -75,9 +95,9 @@ function App() {
     favoriteStorageItems,
     setFavoriteStorageItems,
     cartTotal,
-    deleteItem,
     likedItems,
     setLikedItems,
+    addCartItem,
   };
 
   return (
@@ -87,14 +107,20 @@ function App() {
         <main>
           <div className="content p-40">
             <Routes>
-              <Route path="/" element={<HomePage deleteItem={deleteItem} />} />
-              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route
+                path="/"
+                element={<HomePage />}
+              />
+              <Route
+                path="/favorites"
+                element={<FavoritesPage />}
+              />
             </Routes>
           </div>
           {cartOpened && (
             <Drawer
               onClickClose={() => setCartOpened(false)}
-              removeItem={(card) => deleteItem(card.id)}
+              deleteCartItem={(card) => deleteCartItem(card.id)}
             />
           )}
         </main>

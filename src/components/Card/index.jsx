@@ -47,7 +47,7 @@ function Card(props) {
         </div>
         <img
           className={styles.plus}
-          onClick={props.onClickPlus}
+          onClick={() => dataContext.addCartItem(props.item)}
           src={
             dataContext.cartItems.find(
               (el) =>

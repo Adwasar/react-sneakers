@@ -28,20 +28,20 @@ function Drawer(props) {
         ) : (
           <>
             <div className="items">
-              {dataContext.cartItems.map((el, i) => {
+              {dataContext.cartItems.map((card, i) => {
                 return (
                   <div key={i} className="cartItem d-flex align-center mb-20">
                     <div
                       className="cartItemImg"
-                      style={{ backgroundImage: `url(${el.image})` }}
+                      style={{ backgroundImage: `url(${card.image})` }}
                     ></div>
                     <div className="mr-20 flex">
-                      <p className="mb-5">{el.title}</p>
-                      <b>{el.price} $</b>
+                      <p className="mb-5">{card.title}</p>
+                      <b>{card.price} $</b>
                     </div>
                     <img
                       onClick={() => {
-                        props.removeItem(el);
+                        props.deleteCartItem(card);
                       }}
                       className="removeBtn"
                       src="/img/btn-remove.svg"
