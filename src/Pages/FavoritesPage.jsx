@@ -9,9 +9,11 @@ function FavoritesPage() {
 
   return (
     <>
-      <h1 style={{height: 47.5}} className="mb-40" >Избранное:</h1>
+      <h1 style={{ height: 47.5 }} className="mb-40">
+        Избранное:
+      </h1>
       <div className="d-flex flex-wrap">
-        {dataContext.favoriteItems.map((obj, i) => {
+        {dataContext.favoriteStorageItems.map((obj, i) => {
           const onClickPlus = async () => {
             const isItemOnServer = dataContext.cartItems.filter(
               (el) => el.title === obj.title && el.image === obj.image

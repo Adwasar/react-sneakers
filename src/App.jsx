@@ -11,7 +11,7 @@ import FavoritesPage from "./Pages/FavoritesPage";
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [favoriteStorageItems, setFavoriteStorageItems] = useState([]);
   const [likedItems, setLikedItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
@@ -27,9 +27,11 @@ function App() {
       .then((res) => setCartItems(res.data))
       .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
-    const likedItemsStorage = JSON.parse(localStorage.getItem("favoriteItems"));
+    const likedItemsStorage = JSON.parse(
+      localStorage.getItem("favoriteStorageItems")
+    );
     if (likedItemsStorage) {
-      setFavoriteItems(likedItemsStorage);
+      setFavoriteStorageItems(likedItemsStorage);
     }
 
     setLikedItems(likedItemsStorage);
@@ -37,19 +39,22 @@ function App() {
 
   useEffect(() => {
     const handleUnload = () => {
-      localStorage.setItem("favoriteItems", JSON.stringify(likedItems));
+      localStorage.setItem("favoriteStorageItems", JSON.stringify(likedItems));
     };
     window.addEventListener("beforeunload", handleUnload);
     return () => window.removeEventListener("beforeunload", handleUnload);
   }, [likedItems]);
 
   useEffect(() => {
-    localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
-  }, [favoriteItems]);
+    localStorage.setItem(
+      "favoriteStorageItems",
+      JSON.stringify(favoriteStorageItems)
+    );
+  }, [favoriteStorageItems]);
 
   useEffect(() => {
     setCartTotal(cartItems.reduce((acc, item) => acc + item.price, 0));
-  }, [cartItems])
+  }, [cartItems]);
 
   const deleteItem = (id) => {
     axios
@@ -67,12 +72,12 @@ function App() {
     items,
     cartItems,
     setCartItems,
-    favoriteItems,
-    setFavoriteItems,
+    favoriteStorageItems,
+    setFavoriteStorageItems,
     cartTotal,
     deleteItem,
     likedItems,
-    setLikedItems
+    setLikedItems,
   };
 
   return (

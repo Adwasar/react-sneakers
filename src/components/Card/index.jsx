@@ -6,8 +6,16 @@ function Card(props) {
   const dataContext = React.useContext(DataContext);
 
   const addToFavorite = () => {
-    if (dataContext.likedItems.some((el) => el.title === props.item.title && el.image === props.item.image)) {
-      dataContext.setLikedItems((prev) => prev.filter(el => el.title !== props.item.title || el.image !== props.item.image));
+    if (
+      dataContext.likedItems.some(
+        (el) => el.title === props.item.title && el.image === props.item.image
+      )
+    ) {
+      dataContext.setLikedItems((prev) =>
+        prev.filter(
+          (el) => el.title !== props.item.title || el.image !== props.item.image
+        )
+      );
     } else {
       dataContext.setLikedItems((prev) => [...prev, props.item]);
     }

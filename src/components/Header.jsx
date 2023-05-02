@@ -4,11 +4,16 @@ import DataContext from "../context";
 
 function Header(props) {
   const dataContext = React.useContext(DataContext);
-  
+
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
-        <div onClick={() => dataContext.setFavoriteItems(dataContext.likedItems)} className="headerLeft d-flex align-center cu-p">
+        <div
+          onClick={() =>
+            dataContext.setFavoriteStorageItems(dataContext.likedItems)
+          }
+          className="headerLeft d-flex align-center cu-p"
+        >
           <img
             className="logo"
             width={40}
@@ -32,7 +37,12 @@ function Header(props) {
             <span>{dataContext.cartTotal} $</span>
           </li>
           <Link to="/favorites">
-            <li onClick={() => dataContext.setFavoriteItems(dataContext.likedItems)} className="d-flex align-center mr-25 cu-p">
+            <li
+              onClick={() =>
+                dataContext.setFavoriteStorageItems(dataContext.likedItems)
+              }
+              className="d-flex align-center mr-25 cu-p"
+            >
               <img src="img/heart.svg" width={20} height={20} alt="Закладки" />
             </li>
           </Link>
