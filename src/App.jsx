@@ -28,7 +28,7 @@ function App() {
       .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
     const likedItemsStorage = JSON.parse(
-      localStorage.getItem('favoriteStorageItems'),
+      localStorage.getItem('favoriteStorageItems')
     );
     if (likedItemsStorage) {
       setFavoriteStorageItems(likedItemsStorage);
@@ -48,7 +48,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       'favoriteStorageItems',
-      JSON.stringify(favoriteStorageItems),
+      JSON.stringify(favoriteStorageItems)
     );
   }, [favoriteStorageItems]);
 
@@ -70,13 +70,15 @@ function App() {
 
   const addCartItem = async (currentCard) => {
     const isItemOnCart = cartItems.filter(
-      (cartItem) => cartItem.title === currentCard.title && cartItem.image === currentCard.image,
+      (cartItem) =>
+        cartItem.title === currentCard.title &&
+        cartItem.image === currentCard.image
     );
 
     if (!isItemOnCart.length) {
       await axios.post(
         'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart',
-        currentCard,
+        currentCard
       );
     } else {
       const id = isItemOnCart[0].id;
@@ -97,7 +99,7 @@ function App() {
     cartTotal,
     likedItems,
     setLikedItems,
-    addCartItem,
+    addCartItem
   };
 
   return (
@@ -107,14 +109,8 @@ function App() {
         <main>
           <div className="content p-40">
             <Routes>
-              <Route
-                path="/"
-                element={<HomePage />}
-              />
-              <Route
-                path="/favorites"
-                element={<FavoritesPage />}
-              />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
             </Routes>
           </div>
           {cartOpened && (

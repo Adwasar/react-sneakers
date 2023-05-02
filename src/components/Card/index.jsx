@@ -8,14 +8,13 @@ function Card(props) {
   const addToFavorite = () => {
     if (
       dataContext.likedItems.some(
-        (el) => el.title === props.item.title && el.image === props.item.image,
+        (el) => el.title === props.item.title && el.image === props.item.image
       )
     ) {
       dataContext.setLikedItems((prev) =>
         prev.filter(
-          (el) =>
-            el.title !== props.item.title || el.image !== props.item.image,
-        ),
+          (el) => el.title !== props.item.title || el.image !== props.item.image
+        )
       );
     } else {
       dataContext.setLikedItems((prev) => [...prev, props.item]);
@@ -30,7 +29,7 @@ function Card(props) {
           src={
             dataContext.likedItems.some(
               (el) =>
-                el.title === props.item.title && el.image === props.item.image,
+                el.title === props.item.title && el.image === props.item.image
             )
               ? '/img/heart-like.svg'
               : '/img/heart-unliked.svg'
@@ -51,7 +50,7 @@ function Card(props) {
           src={
             dataContext.cartItems.find(
               (el) =>
-                el.image === props.item.image && el.title === props.item.title,
+                el.image === props.item.image && el.title === props.item.title
             )
               ? '/img/btn-checked.svg'
               : '/img/btn-plus.svg'

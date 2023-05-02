@@ -36,7 +36,7 @@ function HomePage() {
       <div className="d-flex flex-wrap">
         {dataContext.items
           .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase()),
+            item.title.toLowerCase().includes(searchValue.toLowerCase())
           )
           .map((obj, i) => {
             return (

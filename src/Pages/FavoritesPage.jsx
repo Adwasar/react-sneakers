@@ -13,7 +13,6 @@ function FavoritesPage() {
       </h1>
       <div className="d-flex flex-wrap">
         {dataContext.favoriteStorageItems.map((obj, i) => {
-
           return (
             <Card
               key={i}
