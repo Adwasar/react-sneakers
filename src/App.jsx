@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import DataContext from './context';
 import Header from './components/Header';

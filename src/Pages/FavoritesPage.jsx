@@ -2,6 +2,7 @@ import React from 'react';
 import DataContext from '../context';
 
 import Card from '../components/Card';
+import CardLoader from '../components/CardLoader';
 
 function FavoritesPage() {
   const dataContext = React.useContext(DataContext);
@@ -24,6 +25,7 @@ function FavoritesPage() {
           );
         })}
       </div>
+      <CardLoader />
     </>
   );
 }
