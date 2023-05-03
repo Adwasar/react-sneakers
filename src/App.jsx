@@ -15,7 +15,7 @@ function App() {
   const [likedItems, setLikedItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
-  const [isDownloading, setIsDownloading] = useState(true);
+  const [cardsIsDownloading, setCardsIsDownloading] = useState(true);
 
   useEffect(() => {
     const loadingItems = async () => {
@@ -29,7 +29,7 @@ function App() {
         .then((res) => setCartItems(res.data))
         .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
 
-      setIsDownloading(false);
+      setCardsIsDownloading(false);
     };
 
     loadingItems();
@@ -62,8 +62,8 @@ function App() {
     setCartTotal(cartItems.reduce((acc, item) => acc + item.price, 0));
   }, [cartItems]);
 
-  const deleteCartItem = (id) => {
-    axios
+  const deleteCartItem = async (id) => {
+    await axios
       .delete(`https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${id}`)
       .then(() => {
         axios
@@ -88,7 +88,7 @@ function App() {
       );
     } else {
       const id = isItemOnCart[0].id;
-      deleteCartItem(id);
+      await deleteCartItem(id);
     }
 
     await axios
@@ -106,7 +106,8 @@ function App() {
     likedItems,
     setLikedItems,
     addCartItem,
-    isDownloading
+    cardsIsDownloading,
+    deleteCartItem
   };
 
   return (

@@ -1,5 +1,7 @@
 /* eslint-disable multiline-ternary */
 import React from 'react';
+
+import CartItem from './CartItem';
 import DataContext from '../context';
 
 function Drawer(props) {
@@ -31,24 +33,7 @@ function Drawer(props) {
             <div className="items">
               {dataContext.cartItems.map((card, i) => {
                 return (
-                  <div key={i} className="cartItem d-flex align-center mb-20">
-                    <div
-                      className="cartItemImg"
-                      style={{ backgroundImage: `url(${card.image})` }}
-                    ></div>
-                    <div className="mr-20 flex">
-                      <p className="mb-5">{card.title}</p>
-                      <b>{card.price} $</b>
-                    </div>
-                    <img
-                      onClick={() => {
-                        props.deleteCartItem(card);
-                      }}
-                      className="removeBtn"
-                      src="/img/btn-remove.svg"
-                      alt="Remove"
-                    />
-                  </div>
+                  <CartItem key={i} card={card}/>
                 );
               })}
             </div>

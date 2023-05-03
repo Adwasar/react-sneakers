@@ -1,9 +1,22 @@
+/* eslint-disable multiline-ternary */
 import React from 'react';
 import styles from './Card.module.scss';
+import ClipLoader from 'react-spinners/ClipLoader';
+
 import DataContext from '../../context';
 
 function Card(props) {
+  const [isDownloadingToCart, setIsDownloadingToCart] = React.useState(false);
+
   const dataContext = React.useContext(DataContext);
+
+  const handleOnPlus = async () => {
+    setIsDownloadingToCart(true);
+
+    await dataContext.addCartItem(props.item);
+
+    setIsDownloadingToCart(false);
+  };
 
   const addToFavorite = () => {
     if (
@@ -44,19 +57,23 @@ function Card(props) {
           <span>Цена:</span>
           <b>{props.price} $</b>
         </div>
-        <img
-          className={styles.plus}
-          onClick={() => dataContext.addCartItem(props.item)}
-          src={
-            dataContext.cartItems.find(
-              (el) =>
-                el.image === props.item.image && el.title === props.item.title
-            )
-              ? '/img/btn-checked.svg'
-              : '/img/btn-plus.svg'
-          }
-          alt="#"
-        ></img>
+        {isDownloadingToCart ? (
+          <ClipLoader color="#3CC755" size={32} />
+        ) : (
+          <img
+            className={styles.plus}
+            onClick={handleOnPlus}
+            src={
+              dataContext.cartItems.find(
+                (el) =>
+                  el.image === props.item.image && el.title === props.item.title
+              )
+                ? '/img/btn-checked.svg'
+                : '/img/btn-plus.svg'
+            }
+            alt="#"
+          ></img>
+        )}
       </div>
     </div>
   );

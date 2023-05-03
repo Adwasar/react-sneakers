@@ -36,7 +36,7 @@ function HomePage() {
       </div>
 
       <div className="d-flex flex-wrap">
-        {dataContext.isDownloading ? (
+        {dataContext.cardsIsDownloading ? (
           [...Array(8)].map((obj, i) => <CardLoader key={i} />)
         ) : (
           dataContext.items
