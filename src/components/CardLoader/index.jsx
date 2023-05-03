@@ -18,7 +18,7 @@ function CardLoader() {
         <rect x="0" y="135" rx="3" ry="3" width="158" height="15" />
         <rect x="0" y="153" rx="3" ry="3" width="95" height="15" />
         <rect x="0" y="194" rx="3" ry="3" width="80" height="24" />
-        <rect x="126" y="191" rx="3" ry="3" width="32" height="32" />
+        <rect x="126" y="191" rx="8" ry="8" width="32" height="32" />
       </ContentLoader>
     </div>
   );

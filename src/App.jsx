@@ -15,17 +15,24 @@ function App() {
   const [likedItems, setLikedItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/items')
-      .then((res) => setItems(res.data))
-      .catch((error) => alert(error));
+    const loadingItems = async () => {
+      await axios
+        .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/items')
+        .then((res) => setItems(res.data))
+        .catch((error) => alert(error));
 
-    axios
-      .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
-      .then((res) => setCartItems(res.data))
-      .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
+      await axios
+        .get('https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart')
+        .then((res) => setCartItems(res.data))
+        .catch((error) => alert(`Cards weren't added to cart: "${error}"`));
+
+      setIsDownloading(false);
+    };
+
+    loadingItems();
 
     const likedItemsStorage = JSON.parse(
       localStorage.getItem('favoriteStorageItems')
@@ -33,7 +40,6 @@ function App() {
     if (likedItemsStorage) {
       setFavoriteStorageItems(likedItemsStorage);
     }
-
     setLikedItems(likedItemsStorage);
   }, []);
 
@@ -99,7 +105,8 @@ function App() {
     cartTotal,
     likedItems,
     setLikedItems,
-    addCartItem
+    addCartItem,
+    isDownloading
   };
 
   return (

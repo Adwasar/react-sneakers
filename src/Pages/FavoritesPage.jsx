@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react';
 import DataContext from '../context';
 
@@ -13,19 +14,20 @@ function FavoritesPage() {
         Избранное:
       </h1>
       <div className="d-flex flex-wrap">
-        {dataContext.favoriteStorageItems.map((obj, i) => {
-          return (
-            <Card
-              key={i}
-              item={obj}
-              title={obj.title}
-              price={obj.price}
-              image={obj.image}
-            />
-          );
-        })}
+        {dataContext.isDownloading
+          ? [...Array(4)].map((obj, i) => <CardLoader key={i} />)
+          : dataContext.favoriteStorageItems.map((obj, i) => {
+              return (
+                <Card
+                  key={i}
+                  item={obj}
+                  title={obj.title}
+                  price={obj.price}
+                  image={obj.image}
+                />
+              );
+            })}
       </div>
-      <CardLoader />
     </>
   );
 }
