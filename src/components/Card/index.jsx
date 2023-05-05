@@ -19,17 +19,17 @@ function Card(props) {
 
   const addToFavorite = () => {
     if (
-      dataContext.likedItems.some(
+      dataContext.favoriteItems.some(
         (el) => el.title === props.item.title && el.image === props.item.image
       )
     ) {
-      dataContext.setLikedItems((prev) =>
+      dataContext.setFavoriteItems((prev) =>
         prev.filter(
           (el) => el.title !== props.item.title || el.image !== props.item.image
         )
       );
     } else {
-      dataContext.setLikedItems((prev) => [...prev, props.item]);
+      dataContext.setFavoriteItems((prev) => [...prev, props.item]);
     }
   };
 
@@ -39,7 +39,7 @@ function Card(props) {
         <img
           onClick={addToFavorite}
           src={
-            dataContext.likedItems.some(
+            dataContext.favoriteItems.some(
               (el) =>
                 el.title === props.item.title && el.image === props.item.image
             )

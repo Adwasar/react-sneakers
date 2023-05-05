@@ -10,7 +10,7 @@ function Header(props) {
       <Link to="/">
         <div
           onClick={() =>
-            dataContext.setFavoriteStorageItems(dataContext.likedItems)
+            dataContext.setFavoriteStorageItems(dataContext.favoriteItems)
           }
           className="headerLeft d-flex align-center cu-p"
         >
@@ -39,7 +39,7 @@ function Header(props) {
           <Link to="/favorites">
             <li
               onClick={() =>
-                dataContext.setFavoriteStorageItems(dataContext.likedItems)
+                dataContext.setFavoriteStorageItems(dataContext.favoriteItems)
               }
               className="d-flex align-center mr-25 cu-p"
             >

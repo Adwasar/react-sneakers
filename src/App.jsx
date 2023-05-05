@@ -12,7 +12,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteStorageItems, setFavoriteStorageItems] = useState([]);
-  const [likedItems, setLikedItems] = useState([]);
+  const [favoriteItems, setFavoriteItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
   const [cardsIsDownloading, setCardsIsDownloading] = useState(true);
@@ -42,16 +42,16 @@ function App() {
     if (likedItemsStorage) {
       setFavoriteStorageItems(likedItemsStorage);
     }
-    setLikedItems(likedItemsStorage);
+    setFavoriteItems(likedItemsStorage);
   }, []);
 
   useEffect(() => {
     const handleUnload = () => {
-      localStorage.setItem('favoriteStorageItems', JSON.stringify(likedItems));
+      localStorage.setItem('favoriteStorageItems', JSON.stringify(favoriteItems));
     };
     window.addEventListener('beforeunload', handleUnload);
     return () => window.removeEventListener('beforeunload', handleUnload);
-  }, [likedItems]);
+  }, [favoriteItems]);
 
   useEffect(() => {
     localStorage.setItem(
@@ -104,12 +104,11 @@ function App() {
   const dataContext = {
     items,
     cartItems,
-    setCartItems,
     favoriteStorageItems,
     setFavoriteStorageItems,
     cartTotal,
-    likedItems,
-    setLikedItems,
+    favoriteItems,
+    setFavoriteItems,
     addCartItem,
     cardsIsDownloading,
     deleteCartItem,
