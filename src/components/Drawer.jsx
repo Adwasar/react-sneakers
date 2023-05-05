@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import React from 'react';
 
 import CartItem from './CartItem';
@@ -32,9 +31,7 @@ function Drawer(props) {
           <>
             <div className="items">
               {dataContext.cartItems.map((card, i) => {
-                return (
-                  <CartItem key={i} card={card}/>
-                );
+                return <CartItem key={i} card={card} />;
               })}
             </div>
 

@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import React, { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 

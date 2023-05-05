@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import React from 'react';
 import styles from './Card.module.scss';
 import ClipLoader from 'react-spinners/ClipLoader';

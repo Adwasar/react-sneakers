@@ -107,7 +107,7 @@ function App() {
     setLikedItems,
     addCartItem,
     cardsIsDownloading,
-    deleteCartItem
+    deleteCartItem,
   };
 
   return (

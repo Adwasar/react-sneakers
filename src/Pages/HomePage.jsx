@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import React from 'react';
 import Card from '../components/Card';
 import DataContext from '../context';
@@ -36,25 +35,23 @@ function HomePage() {
       </div>
 
       <div className="d-flex flex-wrap">
-        {dataContext.cardsIsDownloading ? (
-          [...Array(8)].map((obj, i) => <CardLoader key={i} />)
-        ) : (
-          dataContext.items
-            .filter((item) =>
-              item.title.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((obj, i) => {
-              return (
-                <Card
-                  key={i}
-                  item={obj}
-                  title={obj.title}
-                  price={obj.price}
-                  image={obj.image}
-                />
-              );
-            })
-        )}
+        {dataContext.cardsIsDownloading
+          ? [...Array(8)].map((obj, i) => <CardLoader key={i} />)
+          : dataContext.items
+              .filter((item) =>
+                item.title.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((obj, i) => {
+                return (
+                  <Card
+                    key={i}
+                    item={obj}
+                    title={obj.title}
+                    price={obj.price}
+                    image={obj.image}
+                  />
+                );
+              })}
       </div>
     </>
   );
