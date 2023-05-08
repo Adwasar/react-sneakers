@@ -153,22 +153,6 @@ header {
 
   .greenButton {
     position: relative;
-
-    &:hover {
-      img {
-        transform: translateX(5px);
-      }
-    }
-
-    img {
-      position: absolute;
-      right: 30px;
-      top: 20px;
-      transition: transform 0.15s ease-in-out;
-    }
-  }
-
-  .greenButton {
     width: 100%;
     height: 55px;
     background: #9DD458;
@@ -182,10 +166,30 @@ header {
 
     &:hover {
       background: lighten(#9DD458, 5%);
+      img {
+        transform: translateX(5px);
+      }
+      .backArrow {
+        transform: translateX(-5px);
+      }
     }
 
     &:active {
       background: darken(#9DD458, 5%);
+    }
+
+    .forwardArrow  {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      transition: transform 0.15s ease-in-out;
+    }
+
+    .backArrow  {
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      transition: transform 0.15s ease-in-out;
     }
   }
 }

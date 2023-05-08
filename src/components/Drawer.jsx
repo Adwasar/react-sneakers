@@ -20,12 +20,16 @@ function Drawer(props) {
         </h2>
 
         {dataContext.cartItems.length === 0 ? (
-          <div className="d-flex align-center justify-center flex-column flex">
+          <div className="cartTotalBlock d-flex align-center justify-center flex-column flex">
             <img src="/img/empty-cart.svg" alt="empty cart" />
             <h2>Корзина пуста</h2>
-            <p className="opacity-6">
+            <p className="opacity-6 pb-40">
               Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ
             </p>
+            <button onClick={props.onClickClose} className="greenButton">
+              <img className="backArrow" src="img/arrow-back.svg" alt="arrow" />
+              Вернуться назад
+            </button>
           </div>
         ) : (
           <>
@@ -49,7 +53,12 @@ function Drawer(props) {
                 </li>
               </ul>
               <button className="greenButton">
-                Оформить заказ <img src="img/arrow.svg" alt="arrow" />
+                Оформить заказ{' '}
+                <img
+                  className="forwardArrow"
+                  src="img/arrow-forward.svg"
+                  alt="arrow"
+                />
               </button>
             </div>
           </>
