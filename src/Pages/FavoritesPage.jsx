@@ -3,6 +3,7 @@ import DataContext from '../context';
 
 import Card from '../components/Card';
 import CardLoader from '../components/CardLoader';
+import PageInfo from '../components/PageInfo';
 
 function FavoritesPage() {
   const dataContext = React.useContext(DataContext);
@@ -13,19 +14,27 @@ function FavoritesPage() {
         Избранное:
       </h1>
       <div className="d-flex flex-wrap">
-        {dataContext.cardsIsDownloading
-          ? [...Array(4)].map((obj, i) => <CardLoader key={i} />)
-          : dataContext.favoriteStorageItems.map((obj, i) => {
-              return (
-                <Card
-                  key={i}
-                  item={obj}
-                  title={obj.title}
-                  price={obj.price}
-                  image={obj.image}
-                />
-              );
-            })}
+        {dataContext.cardsIsDownloading ? (
+          [...Array(4)].map((obj, i) => <CardLoader key={i} />)
+        ) : dataContext.favoriteStorageItems.length ? (
+          dataContext.favoriteStorageItems.map((obj, i) => {
+            return (
+              <Card
+                key={i}
+                item={obj}
+                title={obj.title}
+                price={obj.price}
+                image={obj.image}
+              />
+            );
+          })
+        ) : (
+          <PageInfo
+            img={'/img/sad-1.svg'}
+            title={'Закладок нет :('}
+            description={'Вы ничего не добавляли в закладки'}
+          />
+        )}
       </div>
     </>
   );
