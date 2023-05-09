@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
 import axios from 'axios';
 
@@ -11,23 +11,31 @@ function Drawer(props) {
 
   const dataContext = React.useContext(DataContext);
 
-  useEffect(() => console.log(isLoading), [isLoading]);
-
+  const orders = JSON.parse(localStorage.getItem('orders'));
+  const currentOrderNumber = orders?.[orders.length - 1]?.orderNumber || 0;
+  
   const makeAnOrder = async () => {
+    const cartItems = [...dataContext.cartItems];
+    const orders = JSON.parse(localStorage.getItem('orders'));
+    const currentOrder = {
+      orderNumber: orders ? orders.length + 1 : 1,
+      cards: cartItems,
+    };
+    const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
+
     dataContext.setIsOrdered(true);
     setIsLoading(true);
 
-    const cartItems = [...dataContext.cartItems];
+    localStorage.setItem('orders', JSON.stringify(orderArray));
 
     for (const el of cartItems) {
-      await axios.delete(
-        `https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${el.id}`
-      );
+      await axios
+        .delete(`https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart/${el.id}`)
+        .catch((err) => alert(`Ошибка при отправке запроса: ${err}`));
     }
 
-    setIsLoading(false);
-
     dataContext.setCartItems([]);
+    setIsLoading(false);
   };
 
   return (
@@ -47,10 +55,8 @@ function Drawer(props) {
           dataContext.isOrdered ? (
             <CartInfo
               img={'/img/is-ordered-cart.svg'}
-              title={<span style={{color: '#87C20A'}}>Заказ оформлен!</span>}
-              description={
-                'Ваш заказ скоро будет передан курьерской доставке'
-              }
+              title={<span style={{ color: '#87C20A' }}>Заказ оформлен!</span>}
+              description={`Ваш заказ №${currentOrderNumber} скоро будет передан курьерской доставке`}
             />
           ) : (
             <CartInfo
