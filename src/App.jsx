@@ -16,6 +16,7 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
   const [cardsIsDownloading, setCardsIsDownloading] = useState(true);
+  const [isOrdered, setIsOrdered] = useState(false);
 
   useEffect(() => {
     const loadingItems = async () => {
@@ -101,9 +102,15 @@ function App() {
     setCartItems(res.data);
   };
 
+  const closeCart = () => {
+    setCartOpened(false);
+    setIsOrdered(false);
+  };
+
   const dataContext = {
     items,
     cartItems,
+    setCartItems,
     favoriteStorageItems,
     setFavoriteStorageItems,
     cartTotal,
@@ -112,6 +119,9 @@ function App() {
     addCartItem,
     cardsIsDownloading,
     deleteCartItem,
+    isOrdered,
+    setIsOrdered,
+    closeCart
   };
 
   return (
@@ -127,7 +137,7 @@ function App() {
           </div>
           {cartOpened && (
             <Drawer
-              onClickClose={() => setCartOpened(false)}
+              onClickClose={closeCart}
               deleteCartItem={(card) => deleteCartItem(card.id)}
             />
           )}
