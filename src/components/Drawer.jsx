@@ -11,15 +11,20 @@ function Drawer(props) {
 
   const dataContext = React.useContext(DataContext);
 
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
+
   const orders = JSON.parse(localStorage.getItem('orders'));
   const currentOrderNumber = orders?.[orders.length - 1]?.orderNumber || 0;
-  
+
   const makeAnOrder = async () => {
     const cartItems = [...dataContext.cartItems];
     const orders = JSON.parse(localStorage.getItem('orders'));
     const currentOrder = {
       orderNumber: orders ? orders.length + 1 : 1,
       cards: cartItems,
+      currentDate,
+      currentTime
     };
     const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
 
@@ -35,6 +40,7 @@ function Drawer(props) {
     }
 
     dataContext.setCartItems([]);
+    dataContext.setOrders(JSON.parse(localStorage.getItem('orders')));
     setIsLoading(false);
   };
 

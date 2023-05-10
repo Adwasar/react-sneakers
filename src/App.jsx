@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Drawer from './components/Drawer';
 import HomePage from './Pages/HomePage';
 import FavoritesPage from './Pages/FavoritesPage';
+import UserPage from './Pages/UserPage';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -17,6 +18,7 @@ function App() {
   const [cartTotal, setCartTotal] = useState(0);
   const [cardsIsDownloading, setCardsIsDownloading] = useState(true);
   const [isOrdered, setIsOrdered] = useState(false);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const loadingItems = async () => {
@@ -44,6 +46,9 @@ function App() {
       setFavoriteStorageItems(likedItemsStorage);
     }
     setFavoriteItems(likedItemsStorage);
+
+    const storageOrders = JSON.parse(localStorage.getItem('orders'));
+    setOrders(storageOrders);
   }, []);
 
   useEffect(() => {
@@ -121,7 +126,9 @@ function App() {
     deleteCartItem,
     isOrdered,
     setIsOrdered,
-    closeCart
+    closeCart,
+    orders,
+    setOrders
   };
 
   return (
@@ -133,6 +140,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/user" element={<UserPage />} />
             </Routes>
           </div>
           {cartOpened && (

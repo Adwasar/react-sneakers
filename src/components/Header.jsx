@@ -46,9 +46,21 @@ function Header(props) {
               <img src="img/heart.svg" width={20} height={20} alt="Закладки" />
             </li>
           </Link>
-          <li className="d-flex align-center cu-p">
-            <img src="img/user.svg" width={22} height={22} alt="Пользователь" />
-          </li>
+          <Link to="/user">
+            <li
+              onClick={() =>
+                dataContext.setFavoriteStorageItems(dataContext.favoriteItems)
+              }
+              className="d-flex align-center mr-25 cu-p"
+            >
+              <img
+                src="img/user.svg"
+                width={22}
+                height={22}
+                alt="Пользователь"
+              />
+            </li>
+          </Link>
         </ul>
       </nav>
     </header>
