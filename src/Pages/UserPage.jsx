@@ -11,7 +11,7 @@ function UserPage() {
       <h1 style={{ height: 47.5 }} className="mb-40">
         Мои покупки:
       </h1>
-      {dataContext.orders?.map((el, i) => {
+      {dataContext.orders?.slice().reverse().map((el, i) => {
         return (
           <div key={i}>
             <div className="d-flex align-center">
@@ -20,7 +20,7 @@ function UserPage() {
                 {el.currentDate} {el.currentTime}
               </p>
             </div>
-            <div className="d-flex mb-20">
+            <div className="d-flex flex-wrap mb-20">
               {el.cards?.map((el, i) => {
                 return (
                   <OrderedCard

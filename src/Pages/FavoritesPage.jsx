@@ -15,7 +15,7 @@ function FavoritesPage() {
       </h1>
       <div className="d-flex flex-wrap">
         {dataContext.cardsIsDownloading ? (
-          [...Array(4)].map((obj, i) => <CardLoader key={i} />)
+          [...Array(4)].map((_, i) => <CardLoader key={i} />)
         ) : dataContext.favoriteStorageItems.length ? (
           dataContext.favoriteStorageItems.map((obj, i) => {
             return (

@@ -11,9 +11,6 @@ function Drawer(props) {
 
   const dataContext = React.useContext(DataContext);
 
-  const currentDate = new Date().toLocaleDateString();
-  const currentTime = new Date().toLocaleTimeString();
-
   const orders = JSON.parse(localStorage.getItem('orders'));
   const currentOrderNumber = orders?.[orders.length - 1]?.orderNumber || 0;
 
@@ -23,8 +20,9 @@ function Drawer(props) {
     const currentOrder = {
       orderNumber: orders ? orders.length + 1 : 1,
       cards: cartItems,
-      currentDate,
-      currentTime
+      currentDate: new Date().toLocaleDateString(),
+      currentTime: new Date().toLocaleTimeString(),
+      // total: orders.cards.price.reduce((acc, el) => acc + el, 0)
     };
     const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
 
