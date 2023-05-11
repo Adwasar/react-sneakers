@@ -11,27 +11,29 @@ function UserPage() {
       <h1 style={{ height: 47.5 }} className="mb-40">
         Мои покупки:
       </h1>
-      {dataContext.orders?.slice().reverse().map((el, i) => {
+      {dataContext.orders?.slice().reverse().map((order, i) => {
         return (
-          <div key={i}>
-            <div className="d-flex align-center">
-              <h3>Заказ номер {el.orderNumber}</h3>
-              <p className="opacity-5 ml-50">
-                {el.currentDate} {el.currentTime}
+          <div key={i} className="order">
+            <div className="d-flex align-center justify-between">
+              <h3>Заказ №{order.orderNumber}</h3>
+              <p className="opacity-5">
+                {order.currentDate} {order.currentTime}
               </p>
             </div>
-            <div className="d-flex flex-wrap mb-20">
-              {el.cards?.map((el, i) => {
+            <div className="d-flex flex-wrap">
+              {order.cards?.map((card, i) => {
                 return (
                   <OrderedCard
                     key={i}
-                    title={el.title}
-                    image={el.image}
-                    price={el.price}
+                    title={card.title}
+                    image={card.image}
+                    price={card.price}
+                    total={card.total}
                   />
                 );
               })}
             </div>
+            <strong>Сума заказа: {order.total} $</strong>
           </div>
         );
       })}

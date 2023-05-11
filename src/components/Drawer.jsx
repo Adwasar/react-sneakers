@@ -22,7 +22,7 @@ function Drawer(props) {
       cards: cartItems,
       currentDate: new Date().toLocaleDateString(),
       currentTime: new Date().toLocaleTimeString(),
-      // total: orders.cards.price.reduce((acc, el) => acc + el, 0)
+      total: cartItems.reduce((acc, item) => acc + item.price, 0)
     };
     const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
 
