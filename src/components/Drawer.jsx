@@ -22,7 +22,7 @@ function Drawer(props) {
       cards: cartItems,
       currentDate: new Date().toLocaleDateString(),
       currentTime: new Date().toLocaleTimeString(),
-      total: cartItems.reduce((acc, item) => acc + item.price, 0)
+      total: cartItems.reduce((acc, item) => acc + item.price, 0),
     };
     const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
 
@@ -43,8 +43,10 @@ function Drawer(props) {
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer">
+    <div
+      className={dataContext.cartOpened ? 'overlay overlayShow' : 'overlay'}
+    >
+      <div className={dataContext.cartOpened ? 'drawer drawerShow' : 'drawer'}>
         <h2 className="d-flex justify-between mb-30 ">
           Корзина
           <img
