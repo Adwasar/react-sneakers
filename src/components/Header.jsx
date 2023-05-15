@@ -18,7 +18,7 @@ function Header(props) {
             className="logo"
             width={40}
             height={40}
-            src="img/logo.png"
+            src="img/logo.svg"
             alt="logo"
           />
           <div className="headerInfo">
