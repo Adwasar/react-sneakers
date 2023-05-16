@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
 import axios from 'axios';
 
-import CartItem from './CartItem';
-import CartInfo from './CartInfo';
-import DataContext from '../context';
+import CartItem from '../CartItem';
+import CartInfo from '../CartInfo';
+
+import DataContext from '../../context';
+import styles from './Drawer.module.scss';
 
 function Drawer(props) {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dataContext = React.useContext(DataContext);
 
   const orders = JSON.parse(localStorage.getItem('orders'));
   const currentOrderNumber = orders?.[orders.length - 1]?.orderNumber || 0;
 
-  const makeAnOrder = async () => {
+  const handleOrderSubmit = async () => {
     const cartItems = [...dataContext.cartItems];
     const orders = JSON.parse(localStorage.getItem('orders'));
     const currentOrder = {
@@ -22,14 +24,18 @@ function Drawer(props) {
       cards: cartItems,
       currentDate: new Date().toLocaleDateString(),
       currentTime: new Date().toLocaleTimeString(),
-      total: cartItems.reduce((acc, item) => acc + item.price, 0)
+      total: cartItems.reduce((acc, item) => acc + item.price, 0),
     };
     const orderArray = orders ? [...orders, currentOrder] : [currentOrder];
 
     dataContext.setIsOrdered(true);
     setIsLoading(true);
 
-    localStorage.setItem('orders', JSON.stringify(orderArray));
+    try {
+      localStorage.setItem('orders', JSON.stringify(orderArray));
+    } catch (error) {
+      alert('Что-то пошло не так: ' + error);
+    }
 
     for (const el of cartItems) {
       await axios
@@ -43,8 +49,8 @@ function Drawer(props) {
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer">
+    <div className={dataContext.cartOpened ? [styles.overlay, styles.show].join(' ') : styles.overlay}>
+      <div className={styles.drawer}>
         <h2 className="d-flex justify-between mb-30 ">
           Корзина
           <img
@@ -94,7 +100,7 @@ function Drawer(props) {
               </ul>
               <button
                 disabled={isLoading}
-                onClick={makeAnOrder}
+                onClick={handleOrderSubmit}
                 className="greenButton"
               >
                 {isLoading ? (

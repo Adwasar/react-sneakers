@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Card.module.scss';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import DataContext from '../../context';
+import styles from './Card.module.scss';
 
 function Card(props) {
   const [isDownloadingToCart, setIsDownloadingToCart] = React.useState(false);

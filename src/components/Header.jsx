@@ -18,11 +18,11 @@ function Header(props) {
             className="logo"
             width={40}
             height={40}
-            src="img/logo.png"
+            src="img/logo.svg"
             alt="logo"
           />
           <div className="headerInfo">
-            <h3 className="text-uppercase">React Sneakers</h3>
+            <h3 className="text-uppercase">Sneakers store</h3>
             <p className="opacity-5">Магазин лучших кроссовок</p>
           </div>
         </div>

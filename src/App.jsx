@@ -29,7 +29,7 @@ function App() {
         const cartItemsResponse = await axios.get(
           'https://64020cd7ab6b7399d0b2a6df.mockapi.io/cart'
         );
-  
+
         setItems(itemsResponse.data);
         setCartItems(cartItemsResponse.data);
         setCardsIsDownloading(false);
@@ -53,7 +53,10 @@ function App() {
 
   useEffect(() => {
     const handleUnload = () => {
-      localStorage.setItem('favoriteStorageItems', JSON.stringify(favoriteItems));
+      localStorage.setItem(
+        'favoriteStorageItems',
+        JSON.stringify(favoriteItems)
+      );
     };
     window.addEventListener('beforeunload', handleUnload);
     return () => window.removeEventListener('beforeunload', handleUnload);
@@ -128,7 +131,8 @@ function App() {
     setIsOrdered,
     closeCart,
     orders,
-    setOrders
+    setOrders,
+    cartOpened,
   };
 
   return (
@@ -143,12 +147,10 @@ function App() {
               <Route path="/user" element={<UserPage />} />
             </Routes>
           </div>
-          {cartOpened && (
-            <Drawer
-              onClickClose={closeCart}
-              deleteCartItem={(card) => deleteCartItem(card.id)}
-            />
-          )}
+          <Drawer
+            onClickClose={closeCart}
+            deleteCartItem={(card) => deleteCartItem(card.id)}
+          />
         </main>
       </div>
     </DataContext.Provider>
