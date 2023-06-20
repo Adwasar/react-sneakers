@@ -33,6 +33,12 @@ header {
 }
 
 .content {
+  padding: 40px;
+
+  @media (max-width: 550px) {
+    padding: 20px;
+  }
+
   h1 {
     margin: 0;
   }
@@ -138,11 +144,4 @@ header {
       transition: transform 0.15s ease-in-out;
     }
   }
-}
-
-.order {
-  margin-bottom: 30px;
-  padding: 15px 30px;
-  border: 1px solid #f3f3f3;
-  border-radius: 40px;
 }

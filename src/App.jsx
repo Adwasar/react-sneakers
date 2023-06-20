@@ -140,7 +140,7 @@ function App() {
       <div className="wrapper clear">
         <Header onClickCart={() => setCartOpened(true)} />
         <main>
-          <div className="content p-40">
+          <div className="content">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
