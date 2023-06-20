@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DataContext from '../context';
+import DataContext from '../../context';
+
+import styles from './Header.module.scss';
 
 function Header(props) {
   const dataContext = React.useContext(DataContext);
 
   return (
-    <header className="d-flex justify-between align-center p-40">
+    <header
+      className={`${styles.header} d-flex justify-between align-center p-40`}
+    >
       <Link to="/">
         <div
           onClick={() =>
@@ -27,7 +31,7 @@ function Header(props) {
           </div>
         </div>
       </Link>
-      <nav>
+      <nav className={styles.navigation}>
         <ul className="headerRight d-flex">
           <li
             onClick={props.onClickCart}
