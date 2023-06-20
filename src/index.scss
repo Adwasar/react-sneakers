@@ -33,30 +33,14 @@ header {
 }
 
 .content {
+  padding: 40px;
+
+  @media (max-width: 550px) {
+    padding: 20px;
+  }
+
   h1 {
     margin: 0;
-  }
-}
-
-.search-block {
-  position: relative;
-  border: 1px solid #f3f3f3;
-  border-radius: 10px;
-  padding: 0 15px;
-
-  input {
-    border: 0;
-    padding: 13px;
-    font-size: 16px;
-    width: 200px;
-  }
-
-  .close-btn {
-    position: absolute;
-    right: 16px;
-    height: 18px;
-    width: 18px;
-    cursor: pointer;
   }
 }
 
@@ -160,11 +144,4 @@ header {
       transition: transform 0.15s ease-in-out;
     }
   }
-}
-
-.order {
-  margin-bottom: 30px;
-  padding: 15px 30px;
-  border: 1px solid #f3f3f3;
-  border-radius: 40px;
 }
