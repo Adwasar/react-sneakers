@@ -1,7 +1,9 @@
 import React from 'react';
-import Card from '../components/Card';
-import DataContext from '../context';
-import CardLoader from '../components/CardLoader';
+import Card from '../../components/Card';
+import DataContext from '../../context';
+import CardLoader from '../../components/CardLoader';
+
+import styles from './HomePage.module.scss';
 
 function HomePage() {
   const [searchValue, setSearchValue] = React.useState('');
@@ -14,7 +16,7 @@ function HomePage() {
 
   return (
     <>
-      <div className="d-flex align-center justify-between mb-40">
+      <div className="product-cards d-flex align-center justify-between mb-40">
         <h1>{searchValue ? `Поиск по: "${searchValue}"` : 'Все кроссовки'}</h1>
         <div className="search-block d-flex align-center">
           <img height={16} width={16} src="img/search.svg" alt="Search" />
@@ -34,7 +36,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="d-flex flex-wrap">
+      <div className={`${styles['product-cards']}`}>
         {dataContext.cardsIsDownloading
           ? [...Array(8)].map((obj, i) => <CardLoader key={i} />)
           : dataContext.items
