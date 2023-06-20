@@ -16,9 +16,11 @@ function HomePage() {
 
   return (
     <>
-      <div className="product-cards d-flex align-center justify-between mb-40">
+      <div
+        className={`${styles['search-bar']} d-flex align-center justify-between mb-40`}
+      >
         <h1>{searchValue ? `Поиск по: "${searchValue}"` : 'Все кроссовки'}</h1>
-        <div className="search-block d-flex align-center">
+        <div className={`${styles['search-block']} d-flex align-center`}>
           <img height={16} width={16} src="img/search.svg" alt="Search" />
           <input
             onChange={handleChangeSearch}
@@ -38,7 +40,7 @@ function HomePage() {
 
       <div className={`${styles['product-cards']}`}>
         {dataContext.cardsIsDownloading
-          ? [...Array(8)].map((obj, i) => <CardLoader key={i} />)
+          ? [...Array(8)].map((_, i) => <CardLoader key={i} />)
           : dataContext.items
               .filter((item) =>
                 item.title.toLowerCase().includes(searchValue.toLowerCase())
